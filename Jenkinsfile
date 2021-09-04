@@ -21,15 +21,14 @@ pipeline {
     stage('Build') {
       steps {
         container('node') {
-          sh 'yarn -v'
-          sh 'npm install'
+          sh 'yarn install'
         }
       }
     }
     stage('Test') {
       steps {
         container('node') {
-          sh 'npm test'
+          sh 'yarn test'
         }
       }
     }
