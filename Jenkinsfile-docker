@@ -1,23 +1,34 @@
-node('nodejs-alpine') {
+pipeline {
+  agent {
+    label 'nodejs-alpine'
+  }
+  
   environment {
     REGISTRY_CREDS = credentials('hub.docker.up')
   }
   
-  stage('Clone Sources') {
-    git url: 'https://github.com/phucnv282/jenkins-nodejs'
-  }
-  stage('Build') {
-    sh 'yarn install'
-  }
-  stage('Test') {
-    sh 'yarn test'
-  }
-  stage('Build Image') {
-    sh 'docker build -t $REGISTRY_CREDS_USR/jenkins-nodejs:latest .'
-  }
-  stage('Push Image') {
-    sh 'docker login -u $REGISTRY_CREDS_USR -p $REGISTRY_CREDS_PSW'
-    sh 'docker push $REGISTRY_CREDS_USR/jenkins-nodejs:latest'
-    sh 'docker logout'
+  stages {
+    stage('Build') {
+      steps {
+        sh 'yarn install'
+      }
+    }
+    stage('Test') {
+      steps {
+        sh 'yarn test'
+      }
+    }
+    stage('Build Image') {
+      steps {
+        sh 'docker build -t $REGISTRY_CREDS_USR/jenkins-nodejs:latest .'
+      }
+    }
+    stage('Push Image') {
+      steps {
+        sh 'docker login -u $REGISTRY_CREDS_USR -p $REGISTRY_CREDS_PSW'
+        sh 'docker push $REGISTRY_CREDS_USR/jenkins-nodejs:latest'
+        sh 'docker logout'
+      }
+    }
   }
 }
