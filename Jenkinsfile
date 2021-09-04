@@ -1,21 +1,35 @@
-#!/usr/bin/env groovy
 pipeline {
-  agent any
-  tools {nodejs "lts"}
+  agent {
+    kubernetes {
+      yaml '''
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          labels:
+            ctr: node
+        spec:
+          containers:
+          - name: node
+            image: node:lts-alpine
+            imagePullPolicy: IfNotPresent
+            tty: true
+        '''
+    }
+  }
+  
   stages {
-    stage('build') {
+    stage('Build') {
       steps {
-        sh 'npm install'
+        container('node') {
+          sh 'npm install'
+        }
       }
     }
-    stage('test') {
+    stage('Test') {
       steps {
-        sh 'npm test'
-      }
-    }
-    stage('run') {
-      steps {
-        sh 'npm start &'
+        container('node') {
+          sh 'npm test'
+        }
       }
     }
   }
