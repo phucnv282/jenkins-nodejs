@@ -53,7 +53,7 @@ pipeline {
     stage('Push Image') {
       environment {
         DOCKER_HUB_CREDS = credentials('hub.docker.up')
-        REGISTRY_URL = 'registry.hub.docker.com/'
+        REGISTRY_URL = 'registry.hub.docker.com'
       }
       steps {
         container('docker') {
