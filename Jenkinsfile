@@ -13,13 +13,17 @@ pipeline {
             image: node:lts-alpine
             imagePullPolicy: IfNotPresent
             tty: true
+          - name: docker
+            image: docker:latest
+            imagePullPolicy: IfNotPresent
+            tty: true
             volumeMounts:
-            - mountPath: /usr/bin/docker
-              name: docker-cli
+            - name: dockersock
+              mountPath: /var/run/docker.sock
           volumes:
-          - name: docker-cli
+          - name: dockersock
             hostPath:
-              path: /usr/bin/docker
+              path: /var/run/docker.sock
       '''
     }
   }
@@ -41,7 +45,7 @@ pipeline {
     }
     stage('Build Image') {
       steps {
-        container('node') {
+        container('docker') {
           sh 'docker build -t phucnv282/jenkins-nodejs:latest .'
         }
       }
