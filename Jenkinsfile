@@ -14,13 +14,12 @@ pipeline {
             imagePullPolicy: IfNotPresent
             tty: true
             volumeMounts:
-            - name: docker-cli
-              mountPath: /usr/bin/docker
+            - mountPath: /usr/bin/docker
+              name: docker-cli
           volumes:
           - name: docker-cli
             hostPath:
               path: /usr/bin/docker
-        '''
     }
   }
   
