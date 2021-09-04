@@ -20,6 +20,7 @@ pipeline {
           - name: docker-cli
             hostPath:
               path: /usr/bin/docker
+      '''
     }
   }
   
