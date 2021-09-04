@@ -50,5 +50,12 @@ pipeline {
         }
       }
     }
+    stage('Push Image') {
+      steps {
+        container('docker') {
+          sh 'docker push phucnv282/jenkins-nodejs:latest'
+        }
+      }
+    }
   }
 }
