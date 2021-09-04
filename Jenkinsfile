@@ -19,22 +19,22 @@ pipeline {
   
   stages {
     stage('Build') {
-      container('node') {
-        steps {
+      steps {
+        container('node') {
           sh 'yarn install'
         }
       }
     }
     stage('Test') {
-      container('node') {
-        steps {
+      steps {
+        container('node') {
           sh 'yarn test'
         }
       }
     }
     stage('Build Image') {
-      container('node') {
-        steps {
+      steps {
+        container('node') {
           sh 'docker build -t phucnv282/jenkins-nodejs:latest .'
         }
       }
