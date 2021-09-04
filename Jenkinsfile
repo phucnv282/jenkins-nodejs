@@ -57,7 +57,7 @@ pipeline {
       }
       steps {
         container('docker') {
-          sh 'docker login -u $DOCKER_HUB_CREDS_USR -p $DOCKER_HUB_CREDS_PSW ${REGISTRY_URL}'
+          sh 'docker login -u $DOCKER_HUB_CREDS_USR -p $DOCKER_HUB_CREDS_PSW'
           sh 'docker push phucnv282/jenkins-nodejs:latest'
           sh 'docker logout'
         }
