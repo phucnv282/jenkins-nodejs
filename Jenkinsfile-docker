@@ -4,25 +4,17 @@ node('nodejs-alpine') {
   }
   
   stage('Build') {
-    steps {
-      sh 'yarn install'
-    }
+    sh 'yarn install'
   }
   stage('Test') {
-    steps {
-      sh 'yarn test'
-    }
+    sh 'yarn test'
   }
   stage('Build Image') {
-    steps {
-      sh 'docker build -t $REGISTRY_CREDS_USR/jenkins-nodejs:latest .'
-    }
+    sh 'docker build -t $REGISTRY_CREDS_USR/jenkins-nodejs:latest .'
   }
   stage('Push Image') {
-    steps {
-      sh 'docker login -u $REGISTRY_CREDS_USR -p $REGISTRY_CREDS_PSW'
-      sh 'docker push $REGISTRY_CREDS_USR/jenkins-nodejs:latest'
-      sh 'docker logout'
-    }
+    sh 'docker login -u $REGISTRY_CREDS_USR -p $REGISTRY_CREDS_PSW'
+    sh 'docker push $REGISTRY_CREDS_USR/jenkins-nodejs:latest'
+    sh 'docker logout'
   }
 }
