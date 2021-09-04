@@ -25,7 +25,9 @@ pipeline {
     }
     stage('Push Image') {
       steps {
+        sh 'docker login -u $REGISTRY_CREDS_USR -p $REGISTRY_CREDS_PSW'
         sh 'docker push $REGISTRY_CREDS_USR/jenkins-nodejs:latest'
+        sh 'docker logout'
       }
     }
   }
