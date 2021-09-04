@@ -21,6 +21,7 @@ pipeline {
     stage('Build') {
       steps {
         container('node') {
+          sh 'yarn -v'
           sh 'npm install'
         }
       }
