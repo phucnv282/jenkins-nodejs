@@ -3,6 +3,9 @@ node('nodejs-alpine') {
     REGISTRY_CREDS = credentials('hub.docker.up')
   }
   
+  stage('Clone Sources') {
+    git url: 'https://github.com/phucnv282/jenkins-nodejs'
+  }
   stage('Build') {
     sh 'yarn install'
   }
