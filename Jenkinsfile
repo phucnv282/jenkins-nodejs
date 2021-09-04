@@ -29,7 +29,7 @@ pipeline {
   }
   
   environment {
-    DOCKER_HUB_CREDS = credentials('hub.docker.up')
+    REGISTRY_CREDS = credentials('hub.docker.up')
   }
   
   stages {
@@ -50,15 +50,15 @@ pipeline {
     stage('Build Image') {
       steps {
         container('docker') {
-          sh 'docker build -t phucnv282/jenkins-nodejs:latest .'
+          sh 'docker build -t $REGISTRY_CREDS_USR/jenkins-nodejs:latest .'
         }
       }
     }
     stage('Push Image') {
       steps {
         container('docker') {
-          sh 'docker login -u $DOCKER_HUB_CREDS_USR -p $DOCKER_HUB_CREDS_PSW'
-          sh 'docker push $DOCKER_HUB_CREDS_USR/jenkins-nodejs:latest'
+          sh 'docker login -u $REGISTRY_CREDS_USR -p $REGISTRY_CREDS_PSW'
+          sh 'docker push $REGISTRY_CREDS_USR/jenkins-nodejs:latest'
           sh 'docker logout'
         }
       }
