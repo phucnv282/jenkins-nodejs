@@ -13,6 +13,13 @@ pipeline {
             image: node:lts-alpine
             imagePullPolicy: IfNotPresent
             tty: true
+            volumeMounts:
+            - name: docker-cli
+              mountPath: /usr/bin/docker
+          volumes:
+          - name: docker-cli
+            hostPath:
+              path: /usr/bin/docker
         '''
     }
   }
