@@ -40,7 +40,7 @@ pipeline {
         }
       }
     }
-    stage('Test') {
+    /*stage('Test') {
       steps {
         container('node') {
           sh 'yarn test'
@@ -62,6 +62,6 @@ pipeline {
           sh 'docker logout'
         }
       }
-    }
+    }*/
   }
 }
